@@ -198,9 +198,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
     <section class="content">
         <div class="row">
-          
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">
-          <div class="col-md-9">
+              <div class="col-md-9">
                       <div class="box box-primary">
                         <div class="box-header with-border">
                           <h3 class="box-title">+ Add New Order</h3>
@@ -208,10 +207,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         </div>
 
 
-                      <div class="box-body">
-                        
-                        <div class="col-md-6">
-                        <!-- form start -->
+                        <div class="box-body">
+                          <div class="col-md-6">
+                          <!-- form start -->
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
                                       <label>Name</label>
@@ -257,7 +255,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     </div>
                                   -->
 
-      
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
                                       <label>Item Product</label>
@@ -323,28 +320,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                    
 
                           </div>
-                          </div>
+                        </div>
                               <div class="box-footer">
                               <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Submit</button>
                               </div>
                               </form>
-
-           </div>
+              </div>
           
+
         </div>
     </section>
-    
-  </div>
+    </div>
+  
 
-  <!-- /.content-wrapper -->
-
-
-
-      <footer class="main-footer">
-        
-    <strong>Handcrafted with love. By <a href="mailto:vincentcachila@gmail.com?Subject=Hello%20Vince!">Vince Cachila</a>.</strong> All rights
-    reserved 2019.
+  <footer class="main-footer">
+  <?php include'template/footer.php'; ?>  
   </footer>
+  <!-- /.content-wrapper -->
 </div>
 
 <!-- ./wrapper -->

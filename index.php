@@ -17,7 +17,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>MJDS | Home</title>
+    <title>RMD Auction House | Home</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -164,10 +164,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- /.content -->
   </div>
 
-      <footer class="main-footer">
-        
-    <strong>Handcrafted with love. By <a href="mailto:vincentcachila@gmail.com?Subject=Hello%20Vince!">Vince Cachila</a>.</strong> All rights
-    reserved 2019. 
+  <footer class="main-footer">
+  <?php include'template/footer.php'; ?>      
   </footer>
 
 

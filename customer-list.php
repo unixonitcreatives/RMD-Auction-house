@@ -286,9 +286,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <!-- /.content-wrapper -->
 
   <footer class="main-footer">
-        
-    <strong>Handcrafted with love. By <a href="mailto:vincentcachila@gmail.com?Subject=Hello%20Vince!">Vince Cachila</a>.</strong> All rights
-    reserved 2019.
+  <?php include'template/footer.php'; ?>  
   </footer>
 
 </div>
