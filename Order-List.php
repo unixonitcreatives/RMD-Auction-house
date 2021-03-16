@@ -165,14 +165,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                             <thead>
                             <tr>
-                              <th width="10%">Action</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">ID</th>
+                              
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Status</th>
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Customer Name</th>
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="15%">Item</th>
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Price</th>
     
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Date Ordered</th>
+                              <th width="15%">Action</th>
+                        
                               
                             </tr>
                           </thead>
@@ -199,13 +200,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                      while($row = mysqli_fetch_array($result)){
                                          echo "<tr>";
 
-                                              echo "<td>";
-                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View Order' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
-                                                
-                                               echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              
-                                             echo "</td>";
-                                            echo "<td>#" . $row['id'] . "</td>";
                                              $status = $row['status'];
                                             if($status == "New Order"){
                                               echo "<td> <span class='label label-warning'>New Order</span> </td>";
@@ -221,6 +216,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                              echo "<td>₱" . number_format($row['price'],2) . "</td>";
 
                                              echo "<td>" . $row['order_date'] . "</td>";
+
+                                              echo "<td>";
+                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View Order' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
+                                                
+                                               echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                                             
+                                             echo "</td>";
                                              //echo "<td>" . $row['delivery'] . "</td>";
                                             
 
