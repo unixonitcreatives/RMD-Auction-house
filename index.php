@@ -7,7 +7,6 @@ require_once "config.php";
 
 // Check if the user is logged in, if not then redirect him to login page
 if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
-  echo "<script>alert('Hello! I am an alert box!');</script>";
   header("location: login.php");
   exit;
 }
@@ -111,7 +110,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <section class="content">
     <div class="callout callout-success">
         <h4>The software is now on BETA Testing</h4>
-        <p>You can now use the system alongside with your traditional bookkeeping method for at least a month during the testing period.</p>
+        <p>You can now use the system alongside with your traditional bookkeeping.</p>
         
         <strong>Other Updates</strong>
         <ul>
