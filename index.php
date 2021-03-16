@@ -124,42 +124,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
         <p><strong>Note:</strong> User might experience bugs and errors during the testing period. Please contact developer for assistance.</p>
       </div>
-      <div class="callout callout-warning">
-       <h4>Pending Features</h4>
-        <ul>
-          <li>System - Change Password</li>
-          <li>Customer - Update Phone & Address details</li>
-          <li>Order List - Search by Date Range (example: display all orders from July 01 to July 20) </li>
-        </ul>
-      </div>
 
-      
-
-
-      <!-- Default box -->
-      <div class="box">
-        <div class="box-header with-border">
-          <h3 class="box-title">Hello World</h3>
-
-          <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-              <i class="fa fa-minus"></i></button>
-            <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-              <i class="fa fa-times"></i></button>
-          </div>
-        </div>
-        <div class="box-body">
-          <p>if you have any questions or feedback, please let me know, thank you!</p>
-          Donate to the developer <a href="https://www.paypal.me/vincecachi">link</a>.
-        </div>
-        <!-- /.box-body -->
-        <div class="box-footer">
-          
-          
-        </div>
-        <!-- /.box-footer-->
-      </div>
-      <!-- /.box -->
     </section>
     <!-- /.content -->
   </div>
