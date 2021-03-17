@@ -334,9 +334,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <!-- /.content-wrapper -->
 </div>
 
+</div>
+
 <!-- ./wrapper -->
 
-<<!-- jQuery 3 -->
+<!-- jQuery 3 -->
 <script src="bower_components/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 -->
 <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -508,5 +510,5 @@ document.getElementById("address").value = data.value; //data is the element
 
 
 
-    </body>
+</body>
 </html>
