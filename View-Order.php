@@ -258,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
-                      echo "<td>" . $row['item'] . "</td>";
+                      echo "<td><pre>" . $row['item'] . "</pre></td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
 
                       echo "</tr>";
