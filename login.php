@@ -40,12 +40,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo "<script>alert('succesful login');
               window.location.href='index.php';
               </script>";
-      }
     }
   }
 
-  else
-  {
+  } else {
     // Display an error message
     $alertError = "No account found with that username or password.";
   }
