@@ -1,7 +1,4 @@
 <?php
-// Initialize the session
-session_start();
-
 // Include config file
 require_once "config.php";
 
@@ -33,7 +30,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $hash_db = $row['password'];
       $usertype = $row['usertype'];
 
-      if($row['usertype'] == 'Administrator'){
+      if($usertype == "Administrator"){
+        session_start();
+
+        $_SESSION["loggedin"] = true;
+        $_SESSION["username"] = $username;
+        $_SESSION["usertype"] = "Administrator";
+        
         echo "<script>alert('succesful login');
               window.location.href='index.php';
               </script>";
