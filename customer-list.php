@@ -238,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                      while($row = mysqli_fetch_array($result)){
                                          echo "<tr>";
                                              echo "<td>";
-                                             echo "<a href='View-Customer.php?id=". $row['id'] ."' title='View Order' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
+                                             echo "<a href='View-Customer.php?id=". $row['id'] ."' title='View orders' data-toggle='tooltip'><span class='glyphicon glyphicon-list'></span></a>";
                                                 
                                              //echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."&name=". $row['name']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
 
