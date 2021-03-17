@@ -214,7 +214,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                              echo "<td>" . $row['order_date'] . "</td>";
 
                                               echo "<td>";
-                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View Order' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
+                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View order' data-toggle='tooltip'><span class='glyphicon glyphicon-file'></span></a>";
                                                 
                                                echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              

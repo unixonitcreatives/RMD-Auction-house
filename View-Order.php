@@ -194,13 +194,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <div class="col-sm-3 invoice-col">
               From
               <address>
-                <strong>Mark & Diego Japan Surplus</strong><br>
+                <strong>RMD Auction House</strong><br>
                 Address Here
               </address>
             </div>
             <!-- /.col -->
             <div class="col-sm-3 invoice-col">
-              <h4>
+                Details
+                <address>
                 <b>Order &nbsp;</b>#
                   <?php
                   echo $users_id;
@@ -212,8 +213,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                   <?php
                   echo $order_date;
                   ?>
-                <br><br>
-                
+             
+                <br>
                 <b>Status: &nbsp;</b><?php 
                 if($status == "New Order"){
                                               echo "<td> <span class='label label-warning'>New Order</span> </td>";
@@ -224,9 +225,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                             } else {
                                               echo "<td> <span class='label label-default'>Error</span> </td>";
                                             } 
-                ?></label><br>
+                ?></label>
+              </address>
 
-              </h4>
+             
             </div>
             <!-- /.col -->
           </div>
@@ -256,7 +258,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
-                      echo "<td><pre>" . $row['item'] . "</pre></td>";
+                      echo "<td>" . $row['item'] . "</td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
 
                       echo "</tr>";
@@ -290,9 +292,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               <img src="dist/img/credit/american-express.png" alt="American Express">
               <img src="dist/img/credit/paypal2.png" alt="Paypal">
               -->
-              <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
-               <?php echo $notes; ?>
-              </p>
+             
+               <pre><?php echo $notes; ?></pre>
+           
             </div>
             <!-- /.col -->
     <!-- /.col -->
