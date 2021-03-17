@@ -190,7 +190,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <?php include'template/header-title.php'; ?> 
-
     <section class="content">
         <div class="row">
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">

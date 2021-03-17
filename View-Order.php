@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Purchase Order #
+  <title>RMD | Purchase Order #
     <?php
     echo $users_id;
     ?></title>
@@ -241,6 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 <thead>
                   <tr>
                     <th>Product Description</th>
+                    <th>Note</th>
                     <th>Price</th>
                   </tr>
                 </thead>
@@ -259,6 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
                       echo "<td><pre>" . $row['item'] . "</pre></td>";
+                      echo "<td><pre>" . $row['notes'] . "</pre></td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
 
                       echo "</tr>";
@@ -281,25 +283,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             <!-- /.col -->
           </div>
           <!-- /.row -->
-
-          <div class="row">
-            <!-- accepted payments column -->
-            <div class="col-xs-6">
-              <p class="lead">Important Notes:</p>
-              <!--
-              <img src="dist/img/credit/visa.png" alt="Visa">
-              <img src="dist/img/credit/mastercard.png" alt="Mastercard">
-              <img src="dist/img/credit/american-express.png" alt="American Express">
-              <img src="dist/img/credit/paypal2.png" alt="Paypal">
-              -->
-             
-               <pre><?php echo $notes; ?></pre>
-           
-            </div>
-            <!-- /.col -->
-    <!-- /.col -->
-  </div>
-  <!-- /.row -->
 
   <!-- this row will not appear when printing -->
   <div class="row no-print">

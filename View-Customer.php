@@ -166,9 +166,10 @@ if (mysqli_num_rows($result) > 0) {
                     
                     <th width="10%">Status</th>
                     <th width="30%">Item</th>
+                    <th width="30%">Notes</th>
                     <th width="20%">Price</th>
                     <th width="10%">Date</th>
-                    <th width="30%">Notes</th>
+                    
                   </tr>
                 </thead>
 
@@ -184,7 +185,7 @@ if (mysqli_num_rows($result) > 0) {
 
                       echo "<tr>";
                       echo "<td>";
-                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View Order' data-toggle='tooltip'><span class='glyphicon glyphicon-share'></span></a>";
+                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View Order' data-toggle='tooltip'><span class='glyphicon glyphicon-file'></span></a>";
 
                                              //echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              
@@ -200,10 +201,11 @@ if (mysqli_num_rows($result) > 0) {
                                             } else {
                                               echo "<td> <span class='label label-default'>Error</span> </td>";
                                             }
-                      echo "<td>" . $row['item'] . "</td>";
+                      echo "<td><pre>" . $row['item'] . "</pre></td>";
+                      echo "<td><pre>" . $row['notes'] . "</pre></td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
                       echo "<td>" . $row['order_date'] . "</td>";
-                      echo "<td>" . $row['notes'] . "</td>";
+                      
 
 
                       echo "</tr>";
