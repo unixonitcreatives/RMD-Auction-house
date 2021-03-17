@@ -32,9 +32,16 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $username = $row['username'];
       $hash_db = $row['password'];
       $usertype = $row['usertype'];
-      header('location: index.php');
+
+      if($row['usertype'] == 'Administrator'){
+        echo "<script>alert('succesful login');
+              window.location.href='index.php';
+              </script>";
       exit;
+        
+      }
     }
+  }
 
   else
   {
