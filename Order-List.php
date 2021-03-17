@@ -127,34 +127,35 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                         <!-- form start -->
-                                    <div class="form-group">
-                                      <label>Customer Name</label>
-                                      <input type="text" class="form-control" id="" maxlength="50" placeholder="Customer Name" name="name">
-                                    </div>
+                           
+                            <div class="form-group">
+                              <label>Customer Name</label>
+                              <input type="text" class="form-control" id="" maxlength="50" placeholder="Customer Name" name="name">
+                            </div>
 
                              </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                     <div class="form-group">
                                       <label>Item</label>
                                       <input type="text" class="form-control" id="" placeholder="Item" name="item">
                                     </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                     <div class="form-group">
                                       <label>Order Status</label>
                                       <select class="form-control" style="width: 100%;" name="status" name="status">
-                                        <option></option>
                                         <option>New Order</option>
                                         <option>Paid</option>
                                       </select>
                                     </div>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                     <div class="form-group">
-                                    <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Search</button>
+                                    <label>Search</label>
+                                    <button type="submit" name="save" id="save" class="btn btn-primary form-control" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Go</button>
                                     </div>
                             </div>
 

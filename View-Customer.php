@@ -163,10 +163,12 @@ if (mysqli_num_rows($result) > 0) {
                 <thead>
                   <tr>
                     <th>Action</th>
-                    <th>Order ID</th>
-                    <th>Status</th>
-                    <th>Item</th>
-                    <th>Price</th>
+                    
+                    <th width="10%">Status</th>
+                    <th width="30%">Item</th>
+                    <th width="20%">Price</th>
+                    <th width="10%">Date</th>
+                    <th width="30%">Notes</th>
                   </tr>
                 </thead>
 
@@ -189,7 +191,6 @@ if (mysqli_num_rows($result) > 0) {
                       echo "</td>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
-                      echo "<td>" . $row['id'] . "</td>";
                                             if($row['status'] == "New Order"){
                                               echo "<td> <span class='label label-warning'>New Order</span> </td>";
                                             } elseif ($row['status'] == "Paid") {
@@ -199,8 +200,10 @@ if (mysqli_num_rows($result) > 0) {
                                             } else {
                                               echo "<td> <span class='label label-default'>Error</span> </td>";
                                             }
-                      echo "<td><pre>" . $row['item'] . "</pre></td>";
+                      echo "<td>" . $row['item'] . "</td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
+                      echo "<td>" . $row['order_date'] . "</td>";
+                      echo "<td>" . $row['notes'] . "</td>";
 
 
                       echo "</tr>";

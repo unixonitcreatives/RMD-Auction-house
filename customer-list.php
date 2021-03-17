@@ -48,11 +48,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                   New Customer Successfully Added in Database.
                                   </div>";
 
+                                  echo "<script> window.alert('New Customer Successfully Added in Database')</script>";
+
                                   header("location: customer-list.php");
                                 }else{
                                   $alertMessage = "<div class='alert alert-danger' role='alert'>
                                   Error Adding data in Database.
                                   </div>";}
+
+                                  echo "<script> window.alert('Error Adding data in Database')</script>";
 
                                   // remove all session variables
                                   //session_unset();
