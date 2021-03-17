@@ -34,13 +34,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
       $usertype = $row['usertype'];
 
       if($row['usertype'] == 'Administrator'){
-        
-        if ($result){
-          echo "<script>alert('succesful login');
+        echo "<script>alert('succesful login');
               window.location.href='index.php';
               </script>";
-              exit;
-        }
       }
     }
   }
