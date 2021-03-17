@@ -37,8 +37,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         echo "<script>alert('succesful login');
               window.location.href='index.php';
               </script>";
-      exit;
-        
       }
     }
   }
