@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                   Error Adding data in Database.
                                   </div>";}
 
-                                  echo "<script> window.alert('Error Adding data in Database')</script>";
+                                  echo "<script> window.alert('Error adding data in database')</script>";
 
                                   // remove all session variables
                                   //session_unset();
@@ -129,9 +129,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <!-- Logo -->
     <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">MJ</span>
+      <span class="logo-mini">RMD</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>MD</b>JS</span>
+      <span class="logo-lg"><b>RMD</b> Auction House</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -172,12 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-         Mark & Diego Japan Surplus <br>
-        <small>Order Management System</small>
-      </h1>
-    </section>
+    <?php include'template/header-title.php'; ?> 
 
     <section class="content">
         <div class="row">
@@ -216,7 +211,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     </form>
 
                           </div>
-                          <div class="col-md-12">
+                          <div class="col-md-9">
                             <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
                             <thead>
                             <tr>

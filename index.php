@@ -53,9 +53,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     <!-- Logo -->
     <a href="index.php" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">MJ</span>
+      <span class="logo-mini">RMD</span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>MD</b>JS</span>
+      <span class="logo-lg"><b>RMD</b> Auction House</span>
     </a>
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top">
@@ -99,12 +99,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
     <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-         Mark & Diego Japan Surplus Sales Management System<br>
-        <small>Insert Tagline, Contact Details or Important Details</small>
-      </h1>
-    </section>
+    <?php include'template/header-title.php'; ?> 
 
     <!-- Main content -->
     <section class="content">
