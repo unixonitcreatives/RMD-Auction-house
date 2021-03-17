@@ -27,15 +27,15 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
   $query="SELECT * FROM users WHERE username='$username' AND password='$password'";
   $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-  if($result){
-    session_start();
-    // Store data in session variables
-    $_SESSION["loggedin"] = true;
-    $_SESSION["username"] = $username;
-    $_SESSION["usertype"] = "Administrator";
-    header('location: index.php');
-    exit;
-  }
+  if(mysqli_num_rows($result) > 0){
+  while($row = mysqli_fetch_assoc($result)){
+      $username = $row['username'];
+      $hash_db = $row['password'];
+      $usertype = $row['usertype'];
+      header('location: index.php');
+      exit;
+    }
+
   else
   {
     // Display an error message
@@ -44,8 +44,6 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
   // Close connection
   mysqli_close($link);
-
-
 
 
 }
