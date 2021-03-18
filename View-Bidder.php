@@ -101,29 +101,10 @@ if (mysqli_num_rows($result) > 0) {
 
       <!-- =============================================== -->
 
-        <!-- Left side column. contains the sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        
-        <li><a href="New-Order.php"><i class="fa fa-plus"></i><span>New Order</span></a></li>
-        <li><a href="Order-List.php"><i class="fa fa-bars"></i><span>Order List</span></a></li>
-        <li><a href="customer-list.php"><i class="fa fa-users"></i><span>Customer</span></a></li>
-        <!--
-        <li><a href="Delivery-List.php"><i class="fa fa-truck"></i>Delivery List</a></li> 
-        <li><a href="Product-List.php"><i class="fa fa-cubes"></i>Product List</a></li>
-        <li><a href="Customer-List.php"><i class="fa fa-users"></i>Customer List</a></li>
-      -->
-        <li><a href="logout.php"><i class="fa fa-close"></i><span>Logout</span></a></li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+      <?php include("template/sidebar.php"); ?>
 
       <!-- =============================================== -->
+      
       <div class="content-wrapper">
         <!-- Main content -->
         <section class="invoice">

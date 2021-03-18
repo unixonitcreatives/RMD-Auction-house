@@ -87,85 +87,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MDJS | Customer List</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <!-- Bootstrap 3.3.7 -->
-  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
-  <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="dist/css/skins/_all-skins.min.css">
+  <title>RMD Auction House | Customer List</title>
+  <style>
+    textarea {
+    resize: none;
+  }
+  </style>
 
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
 
-  <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-</head>
-<style>
-  textarea {
-  resize: none;
-}
-</style>
-
-<!-- ADD THE CLASS layout-boxed TO GET A BOXED LAYOUT -->
-<body class="hold-transition skin-blue layout-fixed sidebar-mini">
-<!-- Site wrapper -->
-<div class="wrapper">
-
-  <header class="main-header">
-    <!-- Logo -->
-    <a href="index.php" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini">RMD</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>RMD</b> Auction House</span>
-    </a>
-    <!-- Header Navbar: style can be found in header.less -->
-    <nav class="navbar navbar-static-top">
-      <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
-      </a>
-    </nav>
-  </header>
-
+  <?php include("template/header.php"); ?>
+  
   <!-- =============================================== -->
 
-
-        <!-- Left side column. contains the sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu" data-widget="tree">
-        <li class="header">MAIN NAVIGATION</li>
-        
-        <li><a href="New-Order.php"><i class="fa fa-plus"></i><span>New Order</span></a></li>
-        <li><a href="Order-List.php"><i class="fa fa-bars"></i><span>Order List</span></a></li>
-        <li><a href="customer-list.php"><i class="fa fa-users"></i><span>Customer</span></a></li>
-        <!--
-        <li><a href="Delivery-List.php"><i class="fa fa-truck"></i>Delivery List</a></li> 
-        <li><a href="Product-List.php"><i class="fa fa-cubes"></i>Product List</a></li>
-        <li><a href="Customer-List.php"><i class="fa fa-users"></i>Customer List</a></li>
-      -->
-        <li><a href="logout.php"><i class="fa fa-close"></i><span>Logout</span></a></li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
+  <?php include("template/sidebar.php"); ?>
 
   <!-- =============================================== -->
 
@@ -174,6 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <!-- Content Header (Page header) -->
     <?php include'template/header-title.php'; ?> 
 
+
     <section class="content">
         <div class="row">
           
@@ -181,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
           <div class="col-md-12">
                       <div class="box box-primary">
                         <div class="box-header with-border">
-                          <h3 class="box-title">+ Add New Customer</h3>
+                          <h3 class="box-title">+ Add New Bidder</h3>
                         </div>
 
 
@@ -191,12 +126,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         <!-- form start -->
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Name</label>
+                                      <label>Bidder Name</label>
                                       <input type="text" class="form-control" id="" maxlength="50" placeholder="Name" name="name" required>
                                     </div>
 
                                     <div class="form-group">
-                                      <label>Phone</label>
+                                      <label>Contact No.</label>
                                       <input type="text" class="form-control" id="" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' name="phone" data-mask>
                                     </div>
 
@@ -216,8 +151,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                             <thead>
                             <tr>
                               <th width="10%">Action</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Customer Name</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20">Phone</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Bidder Name</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20">Contact No.</th>
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="40%">Address</th>
 
 
@@ -238,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                      while($row = mysqli_fetch_array($result)){
                                          echo "<tr>";
                                              echo "<td>";
-                                             echo "<a href='View-Customer.php?id=". $row['id'] ."' title='View orders' data-toggle='tooltip'><span class='glyphicon glyphicon-list'></span></a>";
+                                             echo "<a href='View-Bidder.php?id=". $row['id'] ."' title='View orders' data-toggle='tooltip'><span class='glyphicon glyphicon-list'></span></a>";
                                                 
                                              //echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."&name=". $row['name']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
 
