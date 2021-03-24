@@ -190,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                         <div class="input-group-addon">
                                           <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" id="datepicker" name="date" data-mask required> 
+                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" name="date" data-mask required> 
                                       </div>
                                     </div>
 
