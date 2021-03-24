@@ -17,51 +17,32 @@ $name = $address = $item = $price = $date = $phone = $delivery = $status = $note
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   //Assigning posted values to variables.
-  $name = test_input($_POST['name']);
-  //$address = test_input($_POST['address']);
-  $item = test_input($_POST['item']);
-  $price = test_input($_POST['price']);
-
-  //$f_price = float('$price'.replace(',',''));
-
+  $name = test_input($_POST['item']);
   $date = test_input($_POST['date']);
-  //$phone = test_input($_POST['phone']);
-  //$delivery = test_input($_POST['delivery']);
   $status = test_input($_POST['status']);
   $notes = test_input($_POST['notes']);
-  // Validate supplier name
 
   if(empty($name)){
-    $alertMessage = "Please enter name.";
+    $alertMessage = "Please enter item name.";
   }
 
-  // Validate supplier email
-
-  if(empty($item)){
-    $alertMessage = "<p class='text-danger'>Please enter an Item.</p>";
-  }
-
-  // Validate supplier contact number
- if(empty($price)){
-    $alertMessage = "<p class='text-danger'>Please enter Price Value.</p>";
-  }
   if(empty($date)){
-    $alertMessage = "<p class='text-danger'>Please enter Order Date.</p>";
+    $alertMessage = "<p class='text-danger'>Please enter Date Arrived.</p>";
   }
 
   if(empty($alertMessage)){
 
     //Checking the values are existing in the database or not
-    $query = "INSERT INTO orders 
-    (name, address, item, price, order_date, phone, delivery, status, notes) 
+    $query = "INSERT INTO items 
+    (item_name, date_arrived, item_status, notes) 
     VALUES 
-    ('$name', '$address', '$item', '$price', '$date', '$phone', '$delivery', '$status', '$notes')";
+    ('$name', '$date', '$status', '$notes')";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
       $alertMessage = "<div class='alert alert-success' role='alert'>
-      New order successfully Added to the Database.
-      <script>window.location.replace('New-Order.php');</script>
+      New item successfully added to the database.
+      <script>window.location.replace('New-Item.php');</script>
       </div>";
     }else{
       $alertMessage = "<div class='alert alert-danger' role='alert'>
@@ -92,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MDJS | New Order</title>
+  <title>RMD | New Items</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -176,7 +157,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               <div class="col-md-9">
                       <div class="box box-primary">
                         <div class="box-header with-border">
-                          <h3 class="box-title">+ Add New Order</h3>
+                          <h3 class="box-title">+ Add New Items</h3>
                           <?php echo $alertMessage; ?>
                         </div>
 
@@ -184,78 +165,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         <div class="box-body">
                           <div class="col-md-6">
                           <!-- form start -->
-                                    <div class="form-group">
-                                      <label class="text text-red">*</label>
-                                      <label>Name</label>
-                                      <select class="form-control select2" style="width: 100%;" id="" maxlength="50" placeholder="Name" name="name" onchange="" required>
-                                        
-                                        <option selected="selected">Default Customer</option>
-                                        <?php
-
-                                         // Include config file
-                                         require_once "config.php";
-                                         // Attempt select query execution
-                                         $query = "SELECT * FROM customers";
-                                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
-                                         if($result = mysqli_query($link, $query)){
-                                             if(mysqli_num_rows($result) > 0){
-
-                                                     while($row = mysqli_fetch_array($result)){
-
-                                                             echo "<option>" . $row['name'] .  "</option>";
-                                                     }
-
-                                                 // Free result set
-                                                 mysqli_free_result($result);
-                                             } else{
-                                                 echo "<p class='lead'><em>No records were found.</em></p>";
-                                             }
-                                         } else{
-                                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                                         }
-
-                                         mysqli_close($link);
-
-                                        ?>
-
-                                      
-                                      </select>
-                                    </div>
-
-                                    <!--
-                                    <div class="form-group">
-                                      <label>Phone</label>
-                                      <input type="text" class="form-control" id="" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' name="phone" data-mask>
-                                    </div>
-                                  -->
+                          
 
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Item Product</label>
+                                      <label>Item Name</label>
                                       <textarea class="form-control" rows="3" id="" placeholder="Enter Item & Product" name="item"></textarea>
                                     </div>
 
-                                    <div class="form-group">
-                                      <label class="text text-red">*</label>
-                                      <label>Price</label>
-
-                                      <div class="input-group">
-                                        <div class="input-group-addon">
-                                          ₱
-                                        </div>
-
-                                        <input type="text" class="form-control" name="price" placeholder="Price" required>
-                                      </div>
-
-
-                                      <!-- /.input group -->
-                                    </div>
 
                                      <div class="form-group">
                                       <label>Order Status</label>
                                       <select class="form-control select1" style="width: 100%;" name="status" required>
                                         <option>New Order</option>
-                                        <option>Paid</option>
                                       </select>
                                     </div>
                             </div>
@@ -263,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                             <div class="col-md-6">
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Date Ordered</label>
+                                      <label>Date Arrived</label>
                                       <div class="input-group date">
                                         <div class="input-group-addon">
                                           <i class="fa fa-calendar"></i>
@@ -271,6 +193,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                         <input type="text" class="form-control pull-right" id="datepicker" name="date" data-mask required> 
                                       </div>
                                     </div>
+
+
                                     <!-- 
                                     <div class="form-group">
                                       <label class="text text-red">*</label>

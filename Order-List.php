@@ -121,7 +121,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                     <div class="form-group">
                                       <label>Order Status</label>
                                       <select class="form-control" style="width: 100%;" name="status" name="status">
-                                        <option>New Order</option>
+                                        <option disabled>New Order</option>
                                         <option>Paid</option>
                                       </select>
                                     </div>
@@ -144,8 +144,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                               
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Status</th>
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Customer Name</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="15%">Item</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Price</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Item Name</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Notes</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Date Arrived</th>
     
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Date Ordered</th>
                               <th width="15%">Action</th>
@@ -169,7 +170,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                          //$query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%' AND order_date 
                          //BETWEEN '$from' AND '$to'";
               
-                          $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%' ORDER BY status, id desc";
+                          $query = "SELECT * FROM items WHERE item_name LIKE '%$name%' AND item_status LIKE 'Paid' ORDER BY id desc";
                          if($result = mysqli_query($link, $query)){
                              if(mysqli_num_rows($result) > 0){
 

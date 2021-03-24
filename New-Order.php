@@ -10,24 +10,48 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+
+// ============================================================ //
 // Define variables and initialize with empty values
-$name = $address = $item = $price = $date = $phone = $delivery = $status = $notes = "";
+$name = $address = $item = $price = $date = $phone = $delivery = $status = "";
+
+require_once "config.php";
+
+$users_id = $_GET['id'];
+
+$query = "SELECT * from items WHERE id =".$_GET['id']." ";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+
+  while ($row = mysqli_fetch_assoc($result)){
+      $id               = $row['id'];
+      $name             = $row['item_name'];
+      $date_arrived     = $row['date_arrived'];
+      $status           = $row['item_status'];
+      $notes            = $row['notes'];
+
+  }
+
+  $num_rows = mysqli_num_rows($result);
+} else{
+  echo "<p class='lead'><em>No records were found.</em></p>";
+}
+
+// ============================================================ //
+
+
+
+// // Define variables and initialize with empty values
+ 
 
 //If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
+  $bidder_name = $date_ordered = $price = "";
   //Assigning posted values to variables.
-  $name = test_input($_POST['name']);
-  //$address = test_input($_POST['address']);
-  $item = test_input($_POST['item']);
-  $price = test_input($_POST['price']);
-
-  //$f_price = float('$price'.replace(',',''));
-
-  $date = test_input($_POST['date']);
-  //$phone = test_input($_POST['phone']);
-  //$delivery = test_input($_POST['delivery']);
-  $status = test_input($_POST['status']);
+  $bidder_name = test_input($_POST['bidder_name']);
+  $date_ordered = test_input($_POST['date_ordered']);
+  $item_status = test_input($_POST['item_status']);
   $notes = test_input($_POST['notes']);
   // Validate supplier name
 
@@ -50,30 +74,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   }
 
   if(empty($alertMessage)){
+    //UPDATE table_name SET column1 = value1, column2 = value2 WHERE id=100;
+    $query = "UPDATE items SET
+    item_status   = 'Paid'
+    date_released = '$date'
+    sold_to       = '$bidder_name'
 
-    //Checking the values are existing in the database or not
-    $query = "INSERT INTO orders 
-    (name, address, item, price, order_date, phone, delivery, status, notes) 
-    VALUES 
-    ('$name', '$address', '$item', '$price', '$date', '$phone', '$delivery', '$status', '$notes')";
+    WHERE id =".$_GET['id']." ";
+
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
       $alertMessage = "<div class='alert alert-success' role='alert'>
-      New order successfully Added to the Database.
-      <script>window.location.replace('New-Order.php');</script>
+      New order successfully added to the database.
+      <script>window.location.replace('order-list.php');</script>
       </div>";
     }else{
       $alertMessage = "<div class='alert alert-danger' role='alert'>
       Error adding data in Database.
       </div>";}
 
-      // remove all session variables
-      //session_unset();
-      // destroy the session
-      //session_destroy();
-
-      // Close connection
       mysqli_close($link);
 
     }
@@ -186,8 +206,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                           <!-- form start -->
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Name</label>
-                                      <select class="form-control select2" style="width: 100%;" id="" maxlength="50" placeholder="Name" name="name" onchange="" required>
+                                      <label>Bidder Name</label>
+                                      <select class="form-control select2" style="width: 100%;" id="" maxlength="50" placeholder="Name" name="bidder_name" onchange="" required>
                                         
                                         <option selected="selected">Default Customer</option>
                                         <?php
@@ -231,8 +251,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Item Product</label>
-                                      <textarea class="form-control" rows="3" id="" placeholder="Enter Item & Product" name="item"></textarea>
+                                      <label>Item</label>
+                                      <textarea class="form-control" rows="3" id="" placeholder="Enter Item & Product" name="item" disabled><?php echo $name; ?></textarea>
                                     </div>
 
                                     <div class="form-group">
@@ -244,7 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                           ₱
                                         </div>
 
-                                        <input type="text" class="form-control" name="price" placeholder="Price" required>
+                                        <input type="text" class="form-control" name="price" autocomplete="off" placeholder="Price" required>
                                       </div>
 
 
@@ -253,8 +273,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                      <div class="form-group">
                                       <label>Order Status</label>
-                                      <select class="form-control select1" style="width: 100%;" name="status" required>
-                                        <option>New Order</option>
+                                      <select class="form-control select1" style="width: 100%;" name="item_status" required>
+                                  
                                         <option>Paid</option>
                                       </select>
                                     </div>
@@ -263,12 +283,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                             <div class="col-md-6">
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Date Ordered</label>
+                                      <label>Date</label>
                                       <div class="input-group date">
                                         <div class="input-group-addon">
                                           <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" id="datepicker" name="date" data-mask required> 
+                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" name="date_ordered" data-mask required> 
                                       </div>
                                     </div>
                                     <!-- 
@@ -288,7 +308,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                     <div class="form-group">
                                       <label>Notes</label>
-                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Additional Notes" name="notes"></textarea>
+                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Additional Notes" name="notes" disabled><?php echo $notes; ?></textarea>
                                     </div>
 
                                    

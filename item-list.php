@@ -16,7 +16,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>RMD | Order List</title>
+  <title>RMD | Item List</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -95,29 +95,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
           <div class="col-md-12">
                       <div class="box box-primary">
                         <div class="box-header with-border">
-                          <h3 class="box-title">Order List</h3>
+                          <h3 class="box-title">Item List</h3>
                         </div>
 
                         <div class="box-body">
 
 
                             <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">
-                            <div class="col-md-3">
-                        <!-- form start -->
+
+                            <!-- <div class="col-md-3">
+                 
                            
                             <div class="form-group">
                               <label>Customer Name</label>
                               <input type="text" class="form-control" id="" maxlength="50" placeholder="Customer Name" name="name">
                             </div>
 
-                             </div>
+                             </div> -->
+
                             <div class="col-md-3">
                                     <div class="form-group">
                                       <label>Item</label>
                                       <input type="text" class="form-control" id="" placeholder="Item" name="item">
                                     </div>
                             </div>
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                                     <div class="form-group">
                                       <label>Order Status</label>
                                       <select class="form-control" style="width: 100%;" name="status" name="status">
@@ -125,7 +127,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                         <option>Paid</option>
                                       </select>
                                     </div>
-                            </div>
+                            </div> -->
 
                             <div class="col-md-2">
                                     <div class="form-group">
@@ -143,12 +145,12 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <tr>
                               
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Status</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Customer Name</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="15%">Item</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Price</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Item Name</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Note</th>
+
     
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Date Ordered</th>
-                              <th width="15%">Action</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20%">Date Ordered</th>
+                              <th width="10%">Action</th>
                         
                               
                             </tr>
@@ -159,9 +161,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                        // if ($_SERVER["REQUEST_METHOD"] == "POST"){ 
                          // Include config file
                          require_once "config.php";
-                         $name = $_POST['name']; 
-                         $item = $_POST['item']; 
-                         $status = $_POST['status']; 
+                         $name = $_POST['item']; 
+                         $status = $_POST['item_status']; 
                          $from = $_POST['from']; 
                          $to = $_POST['to']; 
 
@@ -169,7 +170,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                          //$query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%' AND order_date 
                          //BETWEEN '$from' AND '$to'";
               
-                          $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%' ORDER BY status, id desc";
+                          $query = "SELECT * FROM items WHERE item_name LIKE '%$name%' AND item_status LIKE 'New Order' ORDER BY id desc";
                          if($result = mysqli_query($link, $query)){
                              if(mysqli_num_rows($result) > 0){
 
@@ -177,9 +178,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                          echo "<tr>";
 
                                              
-                                             $status = $row['status'];
+                                             $status = $row['item_status'];
                                             if($status == "New Order"){
-                                              echo "<td> <span class='label label-warning'>New Order</span> </td>";
+                                              echo "<td> <span class='label label-warning'>In Stock</span> </td>";
                                             } elseif ($status == "Paid") {
                                                 echo "<td> <span class='label label-success'>Paid</span> </td>";
                                             } elseif ($status == "Void") {
@@ -187,14 +188,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             } else {
                                               echo "<td> <span class='label label-default'>Error</span> </td>";
                                             }
-                                             echo "<td>" . $row['name'] . "</td>";
-                                             echo "<td><pre>" . $row['item'] . "</pre></td>";
-                                             echo "<td>₱" . number_format($row['price'],2) . "</td>";
-
-                                             echo "<td>" . $row['order_date'] . "</td>";
+                                             echo "<td><pre>" . $row['item_name'] . "</pre></td>";
+                                             echo "<td><pre>" . $row['notes'] . "</pre></td>";
+                         
+                                             echo "<td>" . $row['date_arrived'] . "</td>";
 
                                               echo "<td>";
-                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View order' data-toggle='tooltip'><span class='glyphicon glyphicon-file'></span></a>";
+                                             echo "<a href='New-Order.php?id=". $row['id'] ."' title='New order' data-toggle='tooltip'><span class='glyphicon glyphicon-plus'></span></a>";
                                                 
                                                echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              
