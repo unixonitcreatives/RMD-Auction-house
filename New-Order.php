@@ -76,8 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   if(empty($alertMessage)){
     //UPDATE table_name SET column1 = value1, column2 = value2 WHERE id=100;
     $query = "UPDATE items SET
-    item_status   = 'Paid'
-    date_released = '$date'
+    item_status   = 'Paid',
+    date_released = '$date',
     sold_to       = '$bidder_name'
 
     WHERE id =".$_GET['id']." ";
