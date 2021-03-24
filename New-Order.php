@@ -13,13 +13,13 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 // ============================================================ //
 // Define variables and initialize with empty values
-$name = $address = $item = $price = $date = $phone = $delivery = $status = "";
+$notes = $users_id = $name = $address = $item = $price = $date = $phone = $delivery = $status = "";
 
 require_once "config.php";
 
-$users_id = $_GET['id'];
+$users_id = $_GET['id']; //url id
 
-$query = "SELECT * from items WHERE id =".$_GET['id']." ";
+$query = "SELECT * from items WHERE id = $users_id " ;
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
@@ -69,18 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
  if(empty($price)){
     $alertMessage = "<p class='text-danger'>Please enter Price Value.</p>";
   }
-  if(empty($date)){
+  if(empty($date_ordered)){
     $alertMessage = "<p class='text-danger'>Please enter Order Date.</p>";
   }
 
   if(empty($alertMessage)){
     //UPDATE table_name SET column1 = value1, column2 = value2 WHERE id=100;
-    $query = "UPDATE items SET
-    item_status   = 'Paid'
-    date_released = '$date'
-    sold_to       = '$bidder_name'
-
-    WHERE id =".$_GET['id']." ";
+    $query = "UPDATE items SET item_status= 'Paid' ,date_released = '$date' ,sold_to = 
+    '$bidder_name' WHERE id = '".$users_id."' " ;
 
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
@@ -192,7 +188,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <?php include'template/header-title.php'; ?> 
     <section class="content">
         <div class="row">
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo $users_id; ?>" method="post" id="theform">
               <div class="col-md-9">
                       <div class="box box-primary">
                         <div class="box-header with-border">
