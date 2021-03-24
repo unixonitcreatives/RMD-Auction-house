@@ -47,7 +47,6 @@ if (mysqli_num_rows($result) > 0) {
 //If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-  $bidder_name = $date_ordered = $price = "";
   //Assigning posted values to variables.
   $bidder_name = test_input($_POST['bidder_name']);
   $date_ordered = test_input($_POST['date_ordered']);
@@ -55,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $notes = test_input($_POST['notes']);
   // Validate supplier name
 
-  if(empty($name)){
+  if(empty($bidder_name)){
     $alertMessage = "Please enter name.";
   }
 
