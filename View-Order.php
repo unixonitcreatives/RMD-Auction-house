@@ -217,7 +217,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
           <!-- Table row -->
           <div class="row">
-            <div class="col-xs-12 table-responsive">
+            <div class="col-xs-9 table-responsive">
               <table class="table table-striped">
                 <thead>
                   <tr>
