@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $query = "INSERT INTO items 
     (item_name, date_arrived, item_status, notes) 
     VALUES 
-    ('$name', '$date', '$status', '$notes')";
+    ('$name', '$date', 'New Order', '$notes')";
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
@@ -154,7 +154,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <section class="content">
         <div class="row">
           <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">
-              <div class="col-md-9">
+              <div class="col-md-6">
                       <div class="box box-primary">
                         <div class="box-header with-border">
                           <h3 class="box-title">+ Add New Items</h3>
@@ -163,61 +163,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 
                         <div class="box-body">
-                          <div class="col-md-6">
+                          <div class="col-md-12 ">
                           <!-- form start -->
                           
 
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Item Name</label>
-                                      <textarea class="form-control" rows="3" id="" placeholder="Enter Item & Product" name="item"></textarea>
+                                      <label>Item Code</label>
+                                      <textarea class="form-control" rows="1" id="" placeholder="Enter item code" name="item"></textarea>
                                     </div>
 
+                                    <div class="form-group">
+                                      <label class="text text-red">*</label>
+                                      <label>Item Description</label>
+                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter item description" name="notes" required></textarea>
+                                    </div>
 
                                      <div class="form-group">
-                                      <label>Order Status</label>
-                                      <select class="form-control select1" style="width: 100%;" name="status" required>
-                                        <option>New Order</option>
-                                      </select>
-                                    </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                    <div class="form-group">
                                       <label class="text text-red">*</label>
                                       <label>Date Arrived</label>
                                       <div class="input-group date">
                                         <div class="input-group-addon">
                                           <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" name="date" data-mask required> 
+                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" name="date" value="<?php echo date("m/d/Y"); ?>" data-mask required> 
                                       </div>
                                     </div>
 
-
-                                    <!-- 
-                                    <div class="form-group">
-                                      <label class="text text-red">*</label>
-                                      <label>Address</label>
-                                     <textarea class="form-control" rows="3" id="Name1" placeholder="Enter Delivery Details" name="address"></textarea>
-                                    </div>
-
-
-                                    <div class="form-group">
-                                      <label>Delivery Details</label> <input type="checkbox" name="check1" onchange="copyTextValue(this);"/>&nbsp;Same as above
-                                       <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Delivery Details" name="delivery"></textarea>
-                                      
-                                    </div>
-                                    -->
-
-                                    <div class="form-group">
-                                      <label>Notes</label>
-                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Additional Notes" name="notes"></textarea>
-                                    </div>
-
-                                   
-
-                          </div>
+                            </div>
                         </div>
                               <div class="box-footer">
                               <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Submit</button>

@@ -106,24 +106,22 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                         <!-- form start -->
                            
                             <div class="form-group">
-                              <label>Customer Name</label>
+                              <label>Bidder Name</label>
                               <input type="text" class="form-control" id="" maxlength="50" placeholder="Customer Name" name="name">
                             </div>
 
                              </div>
                             <div class="col-md-3">
                                     <div class="form-group">
-                                      <label>Item</label>
+                                      <label>Item Code</label>
                                       <input type="text" class="form-control" id="" placeholder="Item" name="item">
                                     </div>
                             </div>
-                            <div class="col-md-2">
+
+                            <div class="col-md-3">
                                     <div class="form-group">
-                                      <label>Order Status</label>
-                                      <select class="form-control" style="width: 100%;" name="status" name="status">
-                                        <option disabled>New Order</option>
-                                        <option>Paid</option>
-                                      </select>
+                                      <label>Description</label>
+                                      <input type="text" class="form-control" id="" placeholder="Item" name="notes">
                                     </div>
                             </div>
 
@@ -142,10 +140,11 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <thead>
                             <tr>
                               
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Status</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Customer Name</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Item Name</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Notes</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="5%">Status</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20%">Bidder Name</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20%">Item Code</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20%">Description</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Price</th>
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Date Arrived</th>
     
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Date Ordered</th>
@@ -161,6 +160,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                          // Include config file
                          require_once "config.php";
                          $name = $_POST['name']; 
+                         $notes = $_POST['notes']; 
                          $item = $_POST['item']; 
                          $status = $_POST['status']; 
                          $from = $_POST['from']; 
@@ -170,7 +170,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                          //$query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%' AND order_date 
                          //BETWEEN '$from' AND '$to'";
               
-                          $query = "SELECT * FROM items WHERE item_name LIKE '%$name%' AND item_status LIKE 'Paid' ORDER BY id desc";
+                          $query = "SELECT * FROM items WHERE sold_to LIKE '%$name%' AND item_name LIKE '%$item%' AND notes LIKE '%$notes%' AND item_status LIKE 'Paid' ORDER BY id desc";
                          if($result = mysqli_query($link, $query)){
                              if(mysqli_num_rows($result) > 0){
 
@@ -178,7 +178,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                          echo "<tr>";
 
                                              
-                                             $status = $row['status'];
+                                             $status = $row['item_status'];
                                             if($status == "New Order"){
                                               echo "<td> <span class='label label-warning'>New Order</span> </td>";
                                             } elseif ($status == "Paid") {
@@ -188,16 +188,20 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             } else {
                                               echo "<td> <span class='label label-default'>Error</span> </td>";
                                             }
-                                             echo "<td>" . $row['name'] . "</td>";
-                                             echo "<td><pre>" . $row['item'] . "</pre></td>";
+                                             echo "<td>" . $row['sold_to'] . "</td>";
+                                             echo "<td>" . $row['item_name'] . "</td>";
+                                             echo "<td>" . $row['notes'] . "</td>";
                                              echo "<td>₱" . number_format($row['price'],2) . "</td>";
+                                              echo "<td>" . $row['date_arrived'] . "</td>";
+                                               echo "<td>" . $row['date_released'] . "</td>";
+                                             
 
-                                             echo "<td>" . $row['order_date'] . "</td>";
+                                            
 
                                               echo "<td>";
                                              echo "<a href='View-Order.php?id=". $row['id'] ."' title='View order' data-toggle='tooltip'><span class='glyphicon glyphicon-file'></span></a>";
                                                 
-                                               echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                                               echo " &nbsp; <a href='item-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip' onclick='javascript:confirmationDelete($(this));return false;'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              
                                              echo "</td>";
                                              //echo "<td>" . $row['delivery'] . "</td>";
@@ -282,6 +286,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 <!-- Alert animation -->
 <script type="text/javascript">
+function confirmationDelete(anchor)
+{
+   var conf = confirm('Are you sure want to delete this record?');
+   if(conf)
+      window.location=anchor.attr("href");
+}
+
+
 $(document).ready(function () {
 
   window.setTimeout(function() {

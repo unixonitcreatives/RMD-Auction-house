@@ -44,7 +44,7 @@ if (mysqli_num_rows($result) > 0) {
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MyHome | Purchase Order #
+  <title>RMD | Bidder Orders #
     <?php
     echo $users_id;
     ?></title>
@@ -157,7 +157,7 @@ if (mysqli_num_rows($result) > 0) {
                 <tbody>
                   <?php
                   require_once "config.php";
-                  $query = "SELECT * from orders WHERE name = '$name' ORDER BY status";
+                  $query = "SELECT * from items WHERE sold_to = '$name' ORDER BY item_status";
                   $result = mysqli_query($link, $query) or die(mysqli_error($link));
                   if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)){
@@ -171,21 +171,14 @@ if (mysqli_num_rows($result) > 0) {
                                              //echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              
                       echo "</td>";
-                      //echo "<td>" .$row['po_trans_id'] . "</td>";
-                      //echo "<td>" . $row['delivery'] . "</td>";
-                                            if($row['status'] == "New Order"){
-                                              echo "<td> <span class='label label-warning'>New Order</span> </td>";
-                                            } elseif ($row['status'] == "Paid") {
-                                                echo "<td> <span class='label label-success'>Paid</span> </td>";
-                                            } elseif ($row['status'] == "Void") {
-                                              echo "<td> <span class='label label-danger'>Void</span> </td>";
-                                            } else {
-                                              echo "<td> <span class='label label-default'>Error</span> </td>";
-                                            }
-                      echo "<td><pre>" . $row['item'] . "</pre></td>";
+
+                             
+                      echo "<td> <span class='label label-success'>Paid</span> </td>";
+                
+                      echo "<td><pre>" . $row['item_name'] . "</pre></td>";
                       echo "<td><pre>" . $row['notes'] . "</pre></td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
-                      echo "<td>" . $row['order_date'] . "</td>";
+                      echo "<td>" . $row['date_released'] . "</td>";
                       
 
 

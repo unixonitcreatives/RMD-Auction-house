@@ -49,8 +49,10 @@ if (mysqli_num_rows($result) > 0) {
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   //Assigning posted values to variables.
   $bidder_name = test_input($_POST['bidder_name']);
+  $item = test_input($_POST['item']);
   $date_ordered = test_input($_POST['date_ordered']);
   $item_status = test_input($_POST['item_status']);
+  $price = test_input($_POST['price']);
   $notes = test_input($_POST['notes']);
   // Validate supplier name
 
@@ -58,13 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     $alertMessage = "Please enter name.";
   }
 
-  // Validate supplier email
-
-  if(empty($item)){
-    $alertMessage = "<p class='text-danger'>Please enter an Item.</p>";
-  }
-
-  // Validate supplier contact number
  if(empty($price)){
     $alertMessage = "<p class='text-danger'>Please enter Price Value.</p>";
   }
@@ -75,8 +70,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   if(empty($alertMessage)){
     //UPDATE table_name SET column1 = value1, column2 = value2 WHERE id=100;
 
-    $query = "UPDATE items SET item_status= 'Paid' ,date_released = '$date' ,sold_to = 
-    '$bidder_name' WHERE id = '".$users_id."' " ;
+    $query = "UPDATE items SET item_status= 'Paid' ,date_released = '$date_ordered' ,sold_to = 
+    '$bidder_name', price = '$price' WHERE id = '".$users_id."' " ;
 
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
@@ -108,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>MDJS | New Order</title>
+  <title>RMD | New Order</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -247,8 +242,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Item</label>
-                                      <textarea class="form-control" rows="3" id="" placeholder="Enter Item & Product" name="item" disabled><?php echo $name; ?></textarea>
+                                      <label>Item Code</label>
+                                      <textarea class="form-control" rows="1" id="" placeholder="Enter Item & Product" name="item" disabled><?php echo $name; ?></textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                      <label>Description</label>
+                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Additional Notes" name="notes" disabled><?php echo $notes; ?></textarea>
+                                    </div>
+
+                                    
+
+                               
+                            </div>
+
+                            <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label class="text text-red">*</label>
+                                      <label>Date</label>
+                                      <div class="input-group date">
+                                        <div class="input-group-addon">
+                                          <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" value="<?php echo date("m/d/Y"); ?>" name="date_ordered" data-mask required> 
+                                      </div>
                                     </div>
 
                                     <div class="form-group">
@@ -266,27 +283,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
                                       <!-- /.input group -->
                                     </div>
-
-                                     <div class="form-group">
-                                      <label>Order Status</label>
-                                      <select class="form-control select1" style="width: 100%;" name="item_status" required>
-                                  
-                                        <option>Paid</option>
-                                      </select>
-                                    </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                    <div class="form-group">
-                                      <label class="text text-red">*</label>
-                                      <label>Date</label>
-                                      <div class="input-group date">
-                                        <div class="input-group-addon">
-                                          <i class="fa fa-calendar"></i>
-                                        </div>
-                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" name="date_ordered" data-mask required> 
-                                      </div>
-                                    </div>
                                     <!-- 
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
@@ -302,10 +298,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                     </div>
                                     -->
 
-                                    <div class="form-group">
-                                      <label>Notes</label>
-                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Additional Notes" name="notes" disabled><?php echo $notes; ?></textarea>
-                                    </div>
+                                    
 
                                    
 

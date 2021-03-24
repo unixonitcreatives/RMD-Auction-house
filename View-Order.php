@@ -15,20 +15,20 @@ require_once "config.php";
 
 $users_id = $_GET['id'];
 
-$query = "SELECT * from orders WHERE id=".$_GET['id']." ";
+$query = "SELECT * from items WHERE id=".$_GET['id']." ";
 $result = mysqli_query($link, $query) or die(mysqli_error($link));
 if (mysqli_num_rows($result) > 0) {
 
   while ($row = mysqli_fetch_assoc($result)){
       $id               = $row['id'];
-      $name             = $row['name'];
+      $name             = $row['sold_to'];
       //$address          = $row['address'];
-      $item             = $row['item'];
+      $item             = $row['item_name'];
       $price            = $row['price'];
-      $order_date             = $row['order_date'];
+      $order_date             = $row['date_released'];
       //$phone            = $row['phone'];
       //$delivery         = $row['delivery'];
-      $status           = $row['status'];
+      $status           = $row['item_status'];
       $notes           = $row['notes'];
 
   }
@@ -230,7 +230,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 <tbody>
                   <?php
                   require_once "config.php";
-                  $query = "SELECT * from orders WHERE id= ".$_GET['id']."";
+                  $query = "SELECT * from items WHERE id= ".$_GET['id']."";
                   $result = mysqli_query($link, $query) or die(mysqli_error($link));
                   if (mysqli_num_rows($result) > 0) {
                     while ($row = mysqli_fetch_assoc($result)){
@@ -240,7 +240,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
-                      echo "<td><pre>" . $row['item'] . "</pre></td>";
+                      echo "<td><pre>" . $row['item_name'] . "</pre></td>";
                       echo "<td><pre>" . $row['notes'] . "</pre></td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
 
@@ -269,20 +269,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   <div class="row no-print">
     <div class="col-xs-12">
 
-
-        <form  method="POST"  action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>?id=<?php echo $users_id; ?>">
-        <?php
-          //<button type="submit" class="btn btn-success pull-right" name="Approved"><i class="fa fa-thumbs-o-up"></i> Approve Purchase Order</button>
-
-          if($status == "Paid"){
-            echo "<button type='submit' class='btn btn-success pull-right' name='Approved' disabled><i class='fa fa-thumbs-o-up'></i> Paid</button>"; //disable Approve
-          } else {
-            echo "<button type='submit' class='btn btn-success pull-right' name='Approved'><i class='fa fa-thumbs-o-up'></i> Paid</button>"; // enable Approve
-
-          }
-
-        ?>
-      </form>
 
         </div>
       </div>

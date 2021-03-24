@@ -13,6 +13,25 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 // Define variables and initialize with empty values
 $name = $address = $item = $price = $date = $phone = $delivery = $status = "";
 
+require_once "config.php";
+
+$users_id = $_GET['id'];
+
+$query = "SELECT * from customers WHERE id=".$_GET['id']." ";
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+
+  while ($row = mysqli_fetch_assoc($result)){
+      $id               = $row['id'];
+      $name             = $row['name'];
+      $phone             = $row['phone'];
+      $address            = $row['address'];
+  }
+  $num_rows = mysqli_num_rows($result);
+} else{
+  echo "<p class='lead'><em>No records were found.</em></p>";
+}
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   //Assigning posted values to variables.
@@ -21,56 +40,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $phone = test_input($_POST['phone']);
 
 
-  // Validate supplier name
-
-  if(empty($name)){
-    $alertMessage = "Please enter name.";
-  }
-
   if(empty($alertMessage)){
-    $sql_check = "SELECT name FROM customers WHERE name ='$name'";
-    if($result = mysqli_query($link, $sql_check)){
-                             if(mysqli_num_rows($result) > 0){
-                                echo "<script> window.alert('Name already exist, Please try again a different name')</script>";
+    //UPDATE table_name SET column1 = value1, column2 = value2 WHERE id=100;
 
-                                 mysqli_free_result($result);
-                             } else{
-                                //Checking the values are existing in the database or not
-                                $query = "INSERT INTO customers 
-                                (name, phone, address) 
-                                VALUES 
-                                ('$name', '$phone', '$address')";
+    $query = "UPDATE customers SET phone = '$phone' ,address = '$address'  WHERE id = '".$users_id."' " ;
 
-                                $result = mysqli_query($link, $query) or die(mysqli_error($link));
+    $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-                                if($result){
-                                  $alertMessage = "<div class='alert alert-success' role='alert'>
-                                  New Customer Successfully Added in Database.
-                                  </div>";
+    if($result){
+      $alertMessage = "<div class='alert alert-success' role='alert'>
+      Bidder successfully updated.
+      <script>window.location.replace('bidder-list.php');</script>
+      </div>";
+    }else{
+      $alertMessage = "<div class='alert alert-danger' role='alert'>
+      Error adding data in Database.
+      </div>";}
 
-                                  echo "<script> window.alert('New Customer Successfully Added in Database')</script>";
-
-                                  header("location: customer-list.php");
-                                }else{
-                                  $alertMessage = "<div class='alert alert-danger' role='alert'>
-                                  Error Adding data in Database.
-                                  </div>";}
-
-                                  echo "<script> window.alert('Error adding data in database')</script>";
-
-                                  // remove all session variables
-                                  //session_unset();
-                                  // destroy the session
-                                  //session_destroy();
-
-                                  // Close connection
-                                  mysqli_close($link);
-                             }
-                         } else{
-                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                         }
-
-                         mysqli_close($link);
+      mysqli_close($link);
 
     }
   }     
@@ -112,7 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <section class="content">
         <div class="row">
           
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo $users_id; ?>" method="post" id="theform">
           <div class="col-md-12">
                       <div class="box box-primary">
                         <div class="box-header with-border">
@@ -125,91 +112,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                         <div class="col-md-6">
                         <!-- form start -->
                                     <div class="form-group">
-                                      <label class="text text-red">*</label>
                                       <label>Bidder Name</label>
-                                      <input type="text" class="form-control" id="" maxlength="50" placeholder="Name" name="name" required>
+                                      <input type="text" class="form-control" id="" maxlength="50" placeholder="Name" name="name" value="<?php echo $name;?>"disabled>
                                     </div>
 
                                     <div class="form-group">
                                       <label>Contact No.</label>
-                                      <input type="text" class="form-control" id="" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' name="phone" data-mask>
+                                      <input type="text" class="form-control" id="" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' name="phone" value="<?php echo $phone;?>" data-mask>
                                     </div>
 
                                     <div class="form-group">
                                       <label>Address</label>
-                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Address" name="address"></textarea>
+                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Address" name="address"><?php echo $address;?></textarea>
                                     </div>
 
                                     <div class="box-footer">
-                                    <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Submit</button>
+                                    <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Update</button>
                                     </div>
                                     </form>
 
                           </div>
-                          <div class="col-md-12">
-                            <table id="example2" class="table table-bordered table-hover dataTable" role="grid" aria-describedby="example2_info">
-                            <thead>
-                            <tr>
-                              <th width="10%">Action</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Bidder Name</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20">Contact No.</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="40%">Address</th>
-
-
-                              
-                            </tr>
-                          </thead>
-                          <tbody>
-                              <?php
-                         // Include config file
-                         require_once "config.php";
-                         // Attempt select query execution
-                         $query = "SELECT * FROM customers";
-              
-                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
-                         if($result = mysqli_query($link, $query)){
-                             if(mysqli_num_rows($result) > 0){
-
-                                     while($row = mysqli_fetch_array($result)){
-                                         echo "<tr>";
-                                             echo "<td>";
-                                             echo "<a href='View-Bidder.php?id=". $row['id'] ."' title='View orders' data-toggle='tooltip'><span class='glyphicon glyphicon-list'></span></a>";
-
-                                             echo "&nbsp; <a href='Edit-Bidder.php?id=". $row['id'] ."' title='Edit info' data-toggle='tooltip'><span class='glyphicon glyphicon-edit'></span></a>";
-                                                
-                                                
-                                             //echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."&name=". $row['name']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
-
-                                             echo "</td>";
-
-                                             echo "<td>" . $row['name'] . "</td>";
-                                             echo "<td>" . $row['phone'] . "</td>";
-                                             echo "<td>" . $row['address'] . "</td>";
-                                         echo "</tr>";
-                                     }
-
-                                 // Free result set
-                                 mysqli_free_result($result);
-                             } else{
-                                 echo "<p class='lead'><em>No records were found.</em></p>";
-                             }
-                         } else{
-                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
-                         }
-                         // Close connection
-                         mysqli_close($link);
-                         ?>
-                            </tbody>
-                          </table>
+                          
                         </div>
-                      </div>
-                             
-
-
-
-
-
-                    </div>
+                     
                           
               </div>
 

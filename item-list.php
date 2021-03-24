@@ -115,8 +115,15 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
                             <div class="col-md-3">
                                     <div class="form-group">
-                                      <label>Item</label>
-                                      <input type="text" class="form-control" id="" placeholder="Item" name="item">
+                                      <label>Item Code</label>
+                                      <input type="text" class="form-control" id="" placeholder="item code" name="item">
+                                    </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                    <div class="form-group">
+                                      <label>Item Description</label>
+                                      <input type="text" class="form-control" id="" placeholder="item description" name="notes">
                                     </div>
                             </div>
                             <!-- <div class="col-md-2">
@@ -145,8 +152,8 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                             <tr>
                               
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Status</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Item Name</th>
-                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Note</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="10%">Item Code</th>
+                              <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="30%">Description</th>
 
     
                               <th class="sorting" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" width="20%">Date Ordered</th>
@@ -162,6 +169,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                          // Include config file
                          require_once "config.php";
                          $name = $_POST['item']; 
+                         $notes = $_POST['notes'];
                          $status = $_POST['item_status']; 
                          $from = $_POST['from']; 
                          $to = $_POST['to']; 
@@ -170,43 +178,30 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                          //$query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%' AND order_date 
                          //BETWEEN '$from' AND '$to'";
               
-                          $query = "SELECT * FROM items WHERE item_name LIKE '%$name%' AND item_status LIKE 'New Order' ORDER BY id desc";
+                          $query = "SELECT * FROM items WHERE item_name LIKE '%$name%' AND notes LIKE '%$notes%' AND item_status LIKE 'New Order' ORDER BY id desc";
                          if($result = mysqli_query($link, $query)){
                              if(mysqli_num_rows($result) > 0){
 
                                      while($row = mysqli_fetch_array($result)){
-                                         echo "<tr>";
+                                        echo "<tr>";
 
-                                             
-                                             $status = $row['item_status'];
-                                            if($status == "New Order"){
-                                              echo "<td> <span class='label label-warning'>In Stock</span> </td>";
-                                            } elseif ($status == "Paid") {
-                                                echo "<td> <span class='label label-success'>Paid</span> </td>";
-                                            } elseif ($status == "Void") {
-                                              echo "<td> <span class='label label-danger'>Void</span> </td>";
-                                            } else {
-                                              echo "<td> <span class='label label-default'>Error</span> </td>";
-                                            }
-                                             echo "<td><pre>" . $row['item_name'] . "</pre></td>";
-                                             echo "<td><pre>" . $row['notes'] . "</pre></td>";
-                         
-                                             echo "<td>" . $row['date_arrived'] . "</td>";
+                                           echo "<td> <span class='label label-warning'>In Stock</span> </td>";
+                              
+                                           echo "<td>" . $row['item_name'] . "</td>";
+                                           echo "<td>" . $row['notes'] . "</td>";
+                       
+                                           echo "<td>" . $row['date_arrived'] . "</td>";
 
-                                              echo "<td>";
-                                             echo "<a href='New-Order.php?id=". $row['id'] ."' title='New order' data-toggle='tooltip'><span class='glyphicon glyphicon-plus'></span></a>";
-                                                
-                                               // echo " &nbsp; <a href='order-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
-                                             
-                                             echo "</td>";
-                                             //echo "<td>" . $row['delivery'] . "</td>";
-                                            
-
-
-
-                                             
-                                         echo "</tr>";
-                                     }
+                                           echo "<td>";
+                                           echo "<a href='New-Order.php?id=". $row['id'] ."' title='New order' data-toggle='tooltip'><span class='glyphicon glyphicon-plus'></span></a>";
+                                          //onclick="return confirm('Are you sure you want to delete this item?')   
+                                           echo " &nbsp; <a href='item-delete.php?id=". $row['id'] ."' title='Delete Item' data-toggle='tooltip' onclick='javascript:confirmationDelete($(this));return false;'><span class='glyphicon glyphicon-trash remove'></span></a>"; 
+                                           // echo " &nbsp; <a href='item-delete.php?id=". $row['id'] ."' title='Delete Item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";
+                                           
+                                           echo "</td>";
+                                          
+                                        echo "</tr>";
+                                    }
 
                                  // Free result set
                                  mysqli_free_result($result);
@@ -281,6 +276,14 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
 
 <!-- Alert animation -->
 <script type="text/javascript">
+
+function confirmationDelete(anchor)
+{
+   var conf = confirm('Are you sure want to delete this record?');
+   if(conf)
+      window.location=anchor.attr("href");
+}
+
 $(document).ready(function () {
 
   window.setTimeout(function() {
