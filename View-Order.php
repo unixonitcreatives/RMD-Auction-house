@@ -221,8 +221,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th>Product Description</th>
-                    <th>Note</th>
+                    <th>Item Code</th>
+                    <th>Description</th>
                     <th>Price</th>
                   </tr>
                 </thead>
@@ -240,8 +240,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                       echo "<tr>";
                       //echo "<td>" .$row['po_trans_id'] . "</td>";
                       //echo "<td>" . $row['delivery'] . "</td>";
-                      echo "<td><pre>" . $row['item_name'] . "</pre></td>";
-                      echo "<td><pre>" . $row['notes'] . "</pre></td>";
+                      echo "<td>" . $row['item_name'] . "</td>";
+                      echo "<td>" . $row['notes'] . "</td>";
                       echo "<td>₱ " . number_format($totalPrice,2) . "</td>";
 
                       echo "</tr>";
