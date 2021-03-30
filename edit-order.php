@@ -10,51 +10,91 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
     exit;
 }
 
+
+// ============================================================ //
 // Define variables and initialize with empty values
-$name = $address = $item = $price = $date = $phone = $delivery = $status = $notes = "";
+$notes = $users_id = $name = $address = $item = $price = $date = $phone = $delivery = $status = "";
+
+require_once "config.php";
+
+$users_id = $_GET['id']; //url id
+
+$query = "SELECT * from items WHERE id = $users_id " ;
+$result = mysqli_query($link, $query) or die(mysqli_error($link));
+if (mysqli_num_rows($result) > 0) {
+
+  while ($row = mysqli_fetch_assoc($result)){
+      $id               = $row['id'];
+      $name             = $row['item_name'];
+      $date_released     = $row['date_released'];
+      $date_arrived     = $row['date_arrived'];
+      $status           = $row['item_status'];
+      $bidder           = $row['sold_to'];
+      $price           = $row['price'];
+      $notes            = $row['notes'];
+
+  }
+
+  $num_rows = mysqli_num_rows($result);
+} else{
+  echo "<p class='lead'><em>No records were found.</em></p>";
+}
+
+// ============================================================ //
+
+if($status == "Paid"){
+  
+} elseif ($status == "New Order"){
+  header("location: index.php");
+} else {
+  header("location: index.php");
+}
+
+
+// // Define variables and initialize with empty values
+ 
 
 //If the form is submitted or not.
 //If the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
   //Assigning posted values to variables.
-  $name = test_input($_POST['item']);
-  $date = test_input($_POST['date']);
-  $status = test_input($_POST['status']);
+  $bidder_name = test_input($_POST['bidder_name']);
+  $item = test_input($_POST['item']);
+  $date_ordered = test_input($_POST['date_ordered']);
+  $item_status = test_input($_POST['item_status']);
+  $price = test_input($_POST['price']);
   $notes = test_input($_POST['notes']);
+  // Validate supplier name
 
-  if(empty($name)){
-    $alertMessage = "Please enter item name.";
+  if(empty($bidder_name)){
+    $alertMessage = "Please enter name.";
   }
 
-  if(empty($date)){
-    $alertMessage = "<p class='text-danger'>Please enter Date Arrived.</p>";
+ if(empty($price)){
+    $alertMessage = "<p class='text-danger'>Please enter Price Value.</p>";
+  }
+  if(empty($date_ordered)){
+    $alertMessage = "<p class='text-danger'>Please enter Order Date.</p>";
   }
 
   if(empty($alertMessage)){
+    //UPDATE table_name SET column1 = value1, column2 = value2 WHERE id=100;
 
-    //Checking the values are existing in the database or not
-    $query = "INSERT INTO items 
-    (item_name, date_arrived, item_status, notes) 
-    VALUES 
-    ('$name', '$date', 'New Order', '$notes')";
+    $query = "UPDATE items SET date_released = '$date_ordered' ,sold_to = 
+    '$bidder_name', price = '$price', notes = '$notes' WHERE id = '".$users_id."' " ;
+
     $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
     if($result){
       $alertMessage = "<div class='alert alert-success' role='alert'>
-      New item successfully added to the database.
-      <script>window.location.replace('new-item.php');</script>
+      New order successfully added to the database.
+      <script>window.location.replace('order-list.php');</script>
       </div>";
     }else{
       $alertMessage = "<div class='alert alert-danger' role='alert'>
       Error adding data in Database.
       </div>";}
 
-      // remove all session variables
-      //session_unset();
-      // destroy the session
-      //session_destroy();
-
-      // Close connection
       mysqli_close($link);
 
     }
@@ -73,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>RMD | New Items</title>
+  <title>RMD | Edit Order</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
@@ -153,47 +193,130 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     <?php include'template/header-title.php'; ?> 
     <section class="content">
         <div class="row">
-          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" id="theform">
-              <div class="col-md-6">
+          <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>?id=<?php echo $users_id; ?>" method="post" id="theform">
+              <div class="col-md-9">
                       <div class="box box-primary">
                         <div class="box-header with-border">
-                          <h3 class="box-title">+ Add New Items</h3>
+                          <h3 class="box-title">+ Add New Order</h3>
                           <?php echo $alertMessage; ?>
                         </div>
 
 
                         <div class="box-body">
-                          <div class="col-md-12 ">
+                          <div class="col-md-6">
                           <!-- form start -->
-                          
+                                    <div class="form-group">
+                                      <label class="text text-red">*</label>
+                                      <label>Bidder Name</label>
+                                      <select class="form-control select2" style="width: 100%;" id="" maxlength="50" placeholder="Name" name="bidder_name" onchange="" required>
+                                        
+                                        <option selected="selected"><?php echo $bidder;?></option>
+                                        <?php
+
+                                         // Include config file
+                                         require_once "config.php";
+                                         // Attempt select query execution
+                                         $query = "SELECT * FROM customers";
+                                        // $query = "SELECT * FROM orders WHERE name LIKE '%$name%' AND item LIKE '%$item%' AND status LIKE '%$status%'";
+                                         if($result = mysqli_query($link, $query)){
+                                             if(mysqli_num_rows($result) > 0){
+
+                                                     while($row = mysqli_fetch_array($result)){
+
+                                                             echo "<option>" . $row['name'] .  "</option>";
+                                                     }
+
+                                                 // Free result set
+                                                 mysqli_free_result($result);
+                                             } else{
+                                                 echo "<p class='lead'><em>No records were found.</em></p>";
+                                             }
+                                         } else{
+                                             echo "ERROR: Could not able to execute $sql. " . mysqli_error($link);
+                                         }
+
+                                         mysqli_close($link);
+
+                                        ?>
+
+                                      
+                                      </select>
+                                    </div>
+
+                                    <!--
+                                    <div class="form-group">
+                                      <label>Phone</label>
+                                      <input type="text" class="form-control" id="" placeholder="Phone" data-inputmask='"mask": "(999) 999-9999"' name="phone" data-mask>
+                                    </div>
+                                  -->
 
                                     <div class="form-group">
                                       <label class="text text-red">*</label>
                                       <label>Item Code</label>
-                                      <textarea class="form-control" rows="1" id="" placeholder="Enter item code" name="item"></textarea>
+                                      <textarea class="form-control" rows="1" id="" placeholder="Enter Item & Product" name="item" disabled><?php echo $name; ?></textarea>
                                     </div>
 
                                     <div class="form-group">
-                                      <label class="text text-red">*</label>
-                                      <label>Item Description</label>
-                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter item description" name="notes" required></textarea>
+                                      <label>Description</label>
+                                      <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Additional Notes" name="notes" required><?php echo $notes; ?></textarea>
                                     </div>
 
-                                     <div class="form-group">
+                                    
+
+                               
+                            </div>
+
+                            <div class="col-md-6">
+                                    
+                                    <div class="form-group">
                                       <label class="text text-red">*</label>
-                                      <label>Date Arrived</label>
+                                      <label>Date Ordered</label>
                                       <div class="input-group date">
                                         <div class="input-group-addon">
                                           <i class="fa fa-calendar"></i>
                                         </div>
-                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" name="date" value="<?php echo date("m/d/Y"); ?>" data-mask required> 
+                                        <input type="text" class="form-control pull-right" autocomplete="off" id="datepicker" value="<?php echo $date_released; ?>" name="date_ordered" data-mask required> 
                                       </div>
                                     </div>
 
-                            </div>
+                                    <div class="form-group">
+                                      <label class="text text-red">*</label>
+                                      <label>Price</label>
+
+                                      <div class="input-group">
+                                        <div class="input-group-addon">
+                                          ₱
+                                        </div>
+
+                                        <input type="text" class="form-control" name="price" autocomplete="off" placeholder="Price" value="<?php echo $price;?>"required>
+                                      </div>
+
+
+                                      <!-- /.input group -->
+                                    </div>
+                                    <!-- 
+                                    <div class="form-group">
+                                      <label class="text text-red">*</label>
+                                      <label>Address</label>
+                                     <textarea class="form-control" rows="3" id="Name1" placeholder="Enter Delivery Details" name="address"></textarea>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                      <label>Delivery Details</label> <input type="checkbox" name="check1" onchange="copyTextValue(this);"/>&nbsp;Same as above
+                                       <textarea class="form-control" rows="3" id="Name2" placeholder="Enter Delivery Details" name="delivery"></textarea>
+                                      
+                                    </div>
+                                    -->
+
+                                    
+
+                                   
+
+                          </div>
                         </div>
                               <div class="box-footer">
-                              <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Submit</button>
+                              <button type="submit" name="save" id="save" class="btn btn-primary" onclick="this.disabled=true;this.value='Submitting...'; this.form.submit();">Update</button>
                               </div>
                               </form>
               </div>

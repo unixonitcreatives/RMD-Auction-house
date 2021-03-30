@@ -9,9 +9,9 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
 
-        <li><a href="New-Item.php"><i class="fa fa-plus"></i><span>New Item</span></a></li>
+        <li><a href="new-item.php"><i class="fa fa-plus"></i><span>New Item</span></a></li>
         <li><a href="item-list.php"><i class="fa fa-cubes"></i><span>Item List</span></a></li>
-        <li><a href="Order-List.php"><i class="fa fa-bars"></i><span>Order List</span></a></li>
+        <li><a href="order-list.php"><i class="fa fa-bars"></i><span>Order List</span></a></li>
         <li><a href="bidder-list.php"><i class="fa fa-users"></i><span>Bidder List</span></a></li>
         <!--
         <li><a href="Delivery-List.php"><i class="fa fa-truck"></i>Delivery List</a></li> 

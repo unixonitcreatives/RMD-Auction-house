@@ -199,7 +199,9 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                             
 
                                               echo "<td>";
-                                             echo "<a href='View-Order.php?id=". $row['id'] ."' title='View order' data-toggle='tooltip'><span class='glyphicon glyphicon-file'></span></a>";
+                                             echo "<a href='view-order.php?id=". $row['id'] ."' title='View order' data-toggle='tooltip'><span class='glyphicon glyphicon-file'></span></a>";
+
+                                              echo " &nbsp; <a href='edit-order.php?id=". $row['id'] ."' title='Edit order' data-toggle='tooltip'><span class='glyphicon glyphicon-edit'></span></a>";
                                                 
                                                echo " &nbsp; <a href='item-delete.php?id=". $row['id'] ."' title='Delete Record' data-toggle='tooltip' onclick='javascript:confirmationDelete($(this));return false;'><span class='glyphicon glyphicon-trash remove'></span></a>";
                                              

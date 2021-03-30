@@ -193,7 +193,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true){
                                            echo "<td>" . $row['date_arrived'] . "</td>";
 
                                            echo "<td>";
-                                           echo "<a href='New-Order.php?id=". $row['id'] ."' title='New order' data-toggle='tooltip'><span class='glyphicon glyphicon-plus'></span></a>";
+                                           echo "<a href='new-order.php?id=". $row['id'] ."' title='New order' data-toggle='tooltip'><span class='glyphicon glyphicon-plus'></span></a>";
                                           //onclick="return confirm('Are you sure you want to delete this item?')   
                                            echo " &nbsp; <a href='item-delete.php?id=". $row['id'] ."' title='Delete Item' data-toggle='tooltip' onclick='javascript:confirmationDelete($(this));return false;'><span class='glyphicon glyphicon-trash remove'></span></a>"; 
                                            // echo " &nbsp; <a href='item-delete.php?id=". $row['id'] ."' title='Delete Item' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";

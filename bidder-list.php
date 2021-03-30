@@ -173,9 +173,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                                      while($row = mysqli_fetch_array($result)){
                                          echo "<tr>";
                                              echo "<td>";
-                                             echo "<a href='View-Bidder.php?id=". $row['id'] ."' title='View orders' data-toggle='tooltip'><span class='glyphicon glyphicon-list'></span></a>";
+                                             echo "<a href='view-bidder.php?id=". $row['id'] ."' title='View orders' data-toggle='tooltip'><span class='glyphicon glyphicon-list'></span></a>";
 
-                                             echo "&nbsp; <a href='Edit-Bidder.php?id=". $row['id'] ."' title='Edit info' data-toggle='tooltip'><span class='glyphicon glyphicon-edit'></span></a>";
+                                             echo "&nbsp; <a href='edit-bidder.php?id=". $row['id'] ."' title='Edit info' data-toggle='tooltip'><span class='glyphicon glyphicon-edit'></span></a>";
                                                 
                                                 
                                              //echo " &nbsp; <a href='customer-delete.php?id=". $row['id'] ."&name=". $row['name']."' title='Delete Record' data-toggle='tooltip'><span class='glyphicon glyphicon-trash remove'></span></a>";

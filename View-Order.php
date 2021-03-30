@@ -62,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
   $approved = mysqli_query($link, $query) or die(mysqli_error($link));
 
   $showStatus = "<span class='label label-success'>Approved</span>";
-  header("Location: Order-List.php");
+  header("Location: order-list.php");
 
 
 }
