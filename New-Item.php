@@ -32,33 +32,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
   if(empty($alertMessage)){
 
-    //Checking the values are existing in the database or not
-    $query = "INSERT INTO items 
-    (item_name, date_arrived, item_status, notes) 
-    VALUES 
-    ('$name', '$date', 'New Order', '$notes')";
-    $result = mysqli_query($link, $query) or die(mysqli_error($link));
+    $sql_check = "SELECT item_name FROM items WHERE item_name ='$name'";
+    if($result = mysqli_query($link, $sql_check)){
+         if(mysqli_num_rows($result) > 0){
+            echo "<script> window.alert('Item code already exist, please try again a different code')</script>";
+            mysqli_free_result($result);
+         } else {
 
-    if($result){
-      $alertMessage = "<div class='alert alert-success' role='alert'>
-      New item successfully added to the database.
-      <script>window.location.replace('new-item.php');</script>
-      </div>";
-    }else{
-      $alertMessage = "<div class='alert alert-danger' role='alert'>
-      Error adding data in Database.
-      </div>";}
+              //Checking the values are existing in the database or not
+              $query = "INSERT INTO items 
+              (item_name, date_arrived, item_status, notes) 
+              VALUES 
+              ('$name', '$date', 'New Order', '$notes')";
+              $result = mysqli_query($link, $query) or die(mysqli_error($link));
 
-      // remove all session variables
-      //session_unset();
-      // destroy the session
-      //session_destroy();
+              if($result){
+                $alertMessage = "
+                <script> window.alert('Added new item succesfully.')</script>
+                <script>window.location.replace('new-item.php');</script>";
+              }else{
+                $alertMessage = "<script> window.alert('Error adding in database.')</script>";}
 
-      // Close connection
-      mysqli_close($link);
+                mysqli_close($link);
 
     }
-  }     
+   }
+ }
+  }   
+ 
 
     function test_input($data) {
     $data = trim($data);
